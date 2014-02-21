@@ -23,7 +23,7 @@ begin;
   inherited;
   with aLabel do begin
     WordWrap:=true;
-    AutoSize:=true;
+    //AutoSize:=true;
     width := thisPanel.Width - 4;
   end;
   updateUI;
@@ -32,6 +32,8 @@ end;
 procedure TSPacehackInstructionDisplay.updateUI;
 begin;
   aLabel.Caption:=instruction;
+  aLabel.width := myPanel.Width - 4;
+  //aLabel.Height:=;
 end;
 
 end.

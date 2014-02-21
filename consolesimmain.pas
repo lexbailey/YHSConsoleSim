@@ -102,6 +102,7 @@ type
     procedure setInstruction(instruction: string);
     procedure tmrUIUpdateTimer(Sender: TObject);
     procedure handleControlUpdate(controlID: integer; topic, payload: string);
+    procedure initiateRount(roundConfig: TJSONObject);
   private
     { private declarations }
   public
@@ -112,6 +113,8 @@ var
   frmMain: TfrmMain;
   myJSONParser: TJSONParser;
   localConfigJSON, interfaceConfigJSON: TJSONObject;
+  roundJSONPaser: TJSONParser;
+  roundConfigJSON: TJSONObject;
   controlsJSON, busesJSON : TJSONObject;
   myIP, serverIP: string;
   numControls, numBuses: integer;
@@ -360,6 +363,11 @@ begin
   end;
 end;
 
+procedure TfrmMain.initiateRount(roundConfig: TJSONObject);
+begin
+
+end;
+
 procedure TfrmMain.MQTTClientPublish(Sender: TObject; topic, payload: ansistring
   );
 var
@@ -389,6 +397,14 @@ begin
           begin
             if topicParser.Strings[2] = 'configure' then begin
               log('got configuration: ' +payload);
+              try
+                roundJSONParser := TJSONParser.Create(payload);
+                roundConfigJSON := TJSONObject(roundJSONPaser.Parse);
+                initiateRount(roundConfigJSON);
+              finally
+                roundConfigJSON.Free;
+                roundJSONPaser.Free;
+              end;
             end else
             begin
               //lets assume that the topic is a control number
@@ -593,6 +609,7 @@ begin
     except
       showmessage('JSON Parsing failed');
     end;
+    myJSONParser.Free;
     myFile.Free;
   end;
 
