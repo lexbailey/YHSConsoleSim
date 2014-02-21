@@ -101,6 +101,7 @@ type
     procedure subscribeTo(topic: string; isAdditional: boolean = false);
     procedure setInstruction(instruction: string);
     procedure tmrUIUpdateTimer(Sender: TObject);
+    procedure handleControlUpdate(controlID: integer; topic, payload: string);
   private
     { private declarations }
   public
@@ -252,6 +253,7 @@ begin
       caption := myspacehackControls[i].hardware;
       parent := TWinControl(thisPanel);
       visible := true;
+      font.Color:=clGray;
     end;
     thisPanel.Tag:=i;
     thisControl.initUI(thisPanel);
@@ -341,10 +343,29 @@ begin
   end;
 end;
 
+procedure TfrmMain.handleControlUpdate(controlID: integer; topic, payload: string);
+var
+  enable: boolean;
+begin
+  if topic = 'name' then begin
+    log('Setting name');
+    myspacehackControls[controlID].name:=payload;
+  end;
+  if topic = 'enabled' then begin
+    enable := payload='1';
+    myspacehackControls[controlID].mypanel.Enabled:=enable;
+    if not enable then begin
+      myspacehackControls[controlID].name:='';
+    end;
+  end;
+end;
+
 procedure TfrmMain.MQTTClientPublish(Sender: TObject; topic, payload: ansistring
   );
 var
   topicParser: TStrings;
+  controlID: integer;
+  thisTopic: string;
 begin
   log(topic + ': ' + payload);
   topicParser := TStringList.Create;
@@ -364,6 +385,26 @@ begin
           if topicParser.Strings[2] = 'instructions' then begin
             log('next instruction is '+payload);
             setInstruction(payload);
+          end else
+          begin
+            if topicParser.Strings[2] = 'configure' then begin
+              log('got configuration: ' +payload);
+            end else
+            begin
+              //lets assume that the topic is a control number
+              try
+                controlID := strtoint(topicParser.Strings[2]);
+                if topicParser.Count>3 then begin
+                  thisTopic := topicParser.Strings[3];
+                  handleControlUpdate(controlID, thisTopic, payload);
+                end else
+                begin
+                  log('Published to incorrect topic');
+                end;
+              except
+                log('unexpected topic');
+              end;
+            end;
           end;
         end;
       end;

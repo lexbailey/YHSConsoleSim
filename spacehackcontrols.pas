@@ -32,6 +32,7 @@ type
     hardware: string;
     pins: TSpacehackPins;
     name: string;
+    mypanel: TPanel;
 
     //ui stuff
     aLabel: TLabel;
@@ -56,18 +57,20 @@ procedure TSpacehackControl.initUI(thisPanel: TPanel);
 begin;
   aLabel := TLabel.Create(thisPanel);
   with aLabel do begin
-    top := 20;
+    top := 14;
     left := 0;
-    Font.Size:=20;
+    Font.Size:=12;
+    Font.Style:=[fsBold];
     Parent:= thisPanel;
     Visible:=true;
     caption := name;
   end;
+  myPanel := thisPanel;
 end;
 
 procedure TSpacehackControl.updateUI;
 begin
-  //blah
+  aLabel.Caption:=name;
 end;
 
 end.

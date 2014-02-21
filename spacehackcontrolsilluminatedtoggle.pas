@@ -75,6 +75,7 @@ end;
 
 procedure TSpacehackGameControlIlluminatedToggle.updateUI;
 begin
+  inherited;
   with lblLight do begin
     if lightIsOn then
     begin

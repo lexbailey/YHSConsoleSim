@@ -69,6 +69,7 @@ end;
 
 procedure TSpacehackGameControlIlluminatedButton.updateUI;
 begin
+  inherited;
   with lblLight do
   begin;
     if lightIsOn then
