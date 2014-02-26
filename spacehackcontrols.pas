@@ -33,7 +33,7 @@ type
     pins: TSpacehackPins;
     name: string;
     mypanel: TPanel;
-
+    enabled: boolean;
     //ui stuff
     aLabel: TLabel;
 
@@ -42,8 +42,9 @@ type
   end;
 
   TSpacehackGameControl = class(TSpacehackControl)
-    public
-    enabled: boolean;
+    controlType: string;
+    changeTopic : string;
+    procedure updateUI override;
   end;
 
 var
@@ -57,20 +58,30 @@ procedure TSpacehackControl.initUI(thisPanel: TPanel);
 begin;
   aLabel := TLabel.Create(thisPanel);
   with aLabel do begin
-    top := 14;
-    left := 0;
     Font.Size:=12;
     Font.Style:=[fsBold];
     Parent:= thisPanel;
     Visible:=true;
     caption := name;
+    WordWrap:=true;
+    Align:=alTop;
+    BorderSpacing.Top:=14;
   end;
   myPanel := thisPanel;
 end;
 
 procedure TSpacehackControl.updateUI;
 begin
-  aLabel.Caption:=name;
+  mypanel.Enabled:=Self.enabled;
+end;
+
+procedure TSpacehackGameControl.updateUI;
+begin
+  if enabled then begin
+    aLabel.Caption:=name;
+  end
+  else
+    aLabel.Caption:='';
 end;
 
 end.

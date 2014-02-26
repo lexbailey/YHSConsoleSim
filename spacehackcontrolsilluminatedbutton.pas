@@ -57,14 +57,32 @@ end;
 procedure TSpacehackGameControlIlluminatedButton.handleButtonUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  lightIsOn := false;
-  ;
+  if controlType = 'toggle' then begin;
+    lightIsOn := not lightIsOn;
+    updateUI;
+    if lightIsOn then begin;
+      MQTTClient.Publish(changeTopic, '1');
+    end else begin;
+      MQTTClient.Publish(changeTopic, '0');
+    end;
+  end else
+  begin
+     if controlType = 'button' then begin
+       lightIsOn := false;
+       updateUI;
+       MQTTClient.Publish(changeTopic, '0');
+     end;
+  end;
 end;
 
 procedure TSpacehackGameControlIlluminatedButton.handleButtonDown(
   Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin;
-  lightIsOn := true;
+  if self.controlType = 'button' then begin;
+    lightIsOn := true;
+    updateUI;
+    MQTTClient.Publish(changeTopic, '1');
+  end;
 end;
 
 procedure TSpacehackGameControlIlluminatedButton.updateUI;

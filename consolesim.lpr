@@ -9,9 +9,9 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, consolesimMain, sysutils, spacehackcontrols,
   spacehackcontrolsinstructiondisplay, spacehackcontrolsilluminatedtoggle,
-  spacehackcontrolskeypad, 
-spacehackcontrolsfourbuttons, spacehackcontrolspotentiometer, 
-spacehackcontrolscombosevensegcolourrotary, spacehackcontrolsilluminatedbutton;
+  spacehackcontrolskeypad, spacehackcontrolsfourbuttons,
+  spacehackcontrolspotentiometer, spacehackcontrolscombosevensegcolourrotary,
+  spacehackcontrolsilluminatedbutton, pinShow;
 
 {$R *.res}
 
@@ -23,6 +23,7 @@ begin
   writeln('Main program: init done');
   Application.CreateForm(TfrmMain, frmMain);
   writeln('Main program: main form created');
+  Application.CreateForm(TfrmPinShow, frmPinShow);
   Application.Run;
 end.
 

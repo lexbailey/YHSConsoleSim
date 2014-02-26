@@ -5,9 +5,9 @@ unit consolesimMain;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, MaskEdit, ComCtrls, EditBtn, Buttons, MQTTComponent, fpjson,
-  JSONParser,
+  Classes, SysUtils, FileUtil, SynHighlighterPo, Forms, Controls, Graphics,
+  Dialogs, StdCtrls, ExtCtrls, MaskEdit, ComCtrls, EditBtn, Buttons, Menus,
+  MQTTComponent, fpjson, JSONParser, pinShow,
 
   spacehackcontrols,
   spacehackcontrolsinstructiondisplay,
@@ -55,6 +55,8 @@ type
     memAddSub: TMemo;
     memPublishPayload: TMemo;
     memStdSub: TMemo;
+    miControlPins: TMenuItem;
+    miShowPins: TMenuItem;
     MQTTClient: TMQTTClient;
     Panel1: TPanel;
     Panel2: TPanel;
@@ -62,6 +64,8 @@ type
     Panel4: TPanel;
     pnlControls: TPanel;
     pnlLoadConfig: TPanel;
+    pmBusOptions: TPopupMenu;
+    pmControlOptions: TPopupMenu;
     sbDrawingArea: TScrollBox;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
@@ -75,6 +79,7 @@ type
     procedure btnClearSubsClick(Sender: TObject);
     procedure btnCreateControlsClick(Sender: TObject);
     procedure btnDisconnectClick(Sender: TObject);
+    procedure btnPinShowClick(Sender: TObject);
     procedure btnPublishClick(Sender: TObject);
     procedure btnRegisterClick(Sender: TObject);
     procedure btnReloadClick(Sender: TObject);
@@ -87,6 +92,8 @@ type
     procedure log(info: string);
     procedure btnConnectClick(Sender: TObject);
     procedure btnSubscribeClick(Sender: TObject);
+    procedure miControlPinsClick(Sender: TObject);
+    procedure miShowPinsClick(Sender: TObject);
     procedure MQTTClientConnAck(Sender: TObject; ReturnCode: integer);
     procedure MQTTClientPingResp(Sender: TObject);
     procedure MQTTClientPublish(Sender: TObject; topic, payload: ansistring);
@@ -100,9 +107,13 @@ type
     procedure loadConfiguration(configFile: string);
     procedure subscribeTo(topic: string; isAdditional: boolean = false);
     procedure setInstruction(instruction: string);
+    procedure setTimeout(timeout: extended);
     procedure tmrUIUpdateTimer(Sender: TObject);
     procedure handleControlUpdate(controlID: integer; topic, payload: string);
-    procedure initiateRount(roundConfig: TJSONObject);
+    procedure initiateRound(roundConfig: TJSONObject);
+    procedure tvControlsClick(Sender: TObject);
+    procedure tvControlsMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { private declarations }
   public
@@ -113,7 +124,7 @@ var
   frmMain: TfrmMain;
   myJSONParser: TJSONParser;
   localConfigJSON, interfaceConfigJSON: TJSONObject;
-  roundJSONPaser: TJSONParser;
+  roundJSONParser: TJSONParser;
   roundConfigJSON: TJSONObject;
   controlsJSON, busesJSON : TJSONObject;
   myIP, serverIP: string;
@@ -141,7 +152,6 @@ end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
-  MQTTClient.init;
 end;
 
 procedure TfrmMain.gbStdSubClick(Sender: TObject);
@@ -151,11 +161,11 @@ end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  MQTTClient.deInit;
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+  spacehackcontrols.MQTTClient := MQTTClient;
 end;
 
 procedure TfrmMain.btnDisconnectClick(Sender: TObject);
@@ -170,6 +180,11 @@ begin
       MQTTClient.ForceDisconnect;
     end;
   end;
+end;
+
+procedure TfrmMain.btnPinShowClick(Sender: TObject);
+begin
+  frmPinShow.show;
 end;
 
 procedure TfrmMain.btnPublishClick(Sender: TObject);
@@ -312,6 +327,44 @@ begin
   subscribeTo(eSubscription.Text, true);
 end;
 
+procedure TfrmMain.miControlPinsClick(Sender: TObject);
+var index, numPins, i: integer;
+begin
+  try
+    index := tvControls.Selected.Index;
+    frmPinShow.Caption:='Pin Finder - Control pins for '+myspacehackControls[index].hardware;
+    numPins := myspacehackControls[index].pins.numPins;
+    frmPinShow.clearPins;
+    for i:= 0 to numPins-1 do begin
+      frmPinShow.activatePin(myspacehackControls[index].pins.pinIDs[i]);
+    end;
+    frmPinShow.Hide;
+    frmPinShow.Show;
+  except
+    ShowMessage('All pins must be defined');
+  end;
+end;
+
+procedure TfrmMain.miShowPinsClick(Sender: TObject);
+var index, numPins, i: integer;
+
+begin
+  try
+    index := tvControls.Selected.Index;
+    frmPinShow.Caption:='Pin Finder - Bus pins for '+spacehackBuses[index].busName;
+    numPins := spacehackBuses[index].pins.numPins;
+    frmPinShow.clearPins;
+    for i:= 0 to numPins-1 do begin
+      frmPinShow.activatePin(spacehackBuses[index].pins.pinIDs[i]);
+    end;
+    frmPinShow.Hide;
+    frmPinShow.Show;
+  except
+    ShowMessage('All pins must be defined');
+  end;
+
+end;
+
 procedure TfrmMain.MQTTClientConnAck(Sender: TObject; ReturnCode: integer);
 begin
   log('Connection established, returned: '+ inttostr(ReturnCode));
@@ -336,6 +389,20 @@ begin
   end;
 end;
 
+procedure TfrmMain.setTimeout(timeout: extended);
+var
+  i: integer;
+begin
+  for i := 0 to numControls-1 do
+  begin
+    if myspacehackControls[i].hardware = 'instructions' then begin
+      log('Instruction time update');
+      TSPacehackInstructionDisplay(myspacehackControls[i]).timeAvailable:=round(timeout*1000);
+      TSPacehackInstructionDisplay(myspacehackControls[i]).timeLeft:=round(timeout*1000);
+    end;
+  end;
+end;
+
 procedure TfrmMain.tmrUIUpdateTimer(Sender: TObject);
 var
   i: integer;
@@ -343,6 +410,10 @@ begin
   for i := 0 to numControls-1 do
   begin
     myspacehackControls[i].updateUI;
+    if myspacehackControls[i].hardware = 'instructions' then begin
+       TSPacehackInstructionDisplay(myspacehackControls[i]).timeLeft:=
+       TSPacehackInstructionDisplay(myspacehackControls[i]).timeLeft - tmrUIUpdate.Interval;
+    end;
   end;
 end;
 
@@ -356,16 +427,66 @@ begin
   end;
   if topic = 'enabled' then begin
     enable := payload='1';
-    myspacehackControls[controlID].mypanel.Enabled:=enable;
-    if not enable then begin
-      myspacehackControls[controlID].name:='';
-    end;
+    TSpacehackGameControl(myspacehackControls[controlID]).Enabled:=enable;
   end;
 end;
 
-procedure TfrmMain.initiateRount(roundConfig: TJSONObject);
+procedure TfrmMain.initiateRound(roundConfig: TJSONObject);
+var controlsJSON: TJSONObject;
+  numControls: integer;
+  i: integer;
+  thisID: integer;
+  thisIDText: string;
+  thisControlJSON: TJSONObject;
+
+  controlEnabled: integer;
+  controlType: string;
+  controlName: string;
+begin
+  controlsJSON := TJSONObject(roundConfig.Find('controls'));
+  numControls := controlsJSON.Count;
+  for i := 0 to numControls-1 do begin
+    thisID := i+1;
+    thisIDText := inttostr(thisID);
+    log ('testing ID: '+thisIDText);
+    thisControlJSON := controlsJSON.Objects[thisIDText];
+    if assigned(thisControlJSON) then begin
+      controlType := thisControlJSON.Strings['type'];
+      controlName := thisControlJSON.Strings['name'];
+      controlEnabled := thisControlJSON.Integers['enabled'];
+
+      myspacehackControls[thisID].enabled:= controlEnabled = 1;
+      myspacehackControls[thisID].name := controlName;
+      TSpacehackGameControl(myspacehackControls[thisID]).controlType := controlType;
+      log('Control '+inttostr(thisID)+' is now ' + controlName + ', ' + controlType + ', Active: ' + inttostr(controlEnabled));
+
+    end;
+  end;
+  setInstruction(roundConfig.Strings['instructions']);
+
+  if roundConfig.Find('timeout') <> nil then begin;
+    setTimeout(roundConfig.Floats['timeout']);
+  end;
+end;
+
+procedure TfrmMain.tvControlsClick(Sender: TObject);
 begin
 
+end;
+
+procedure TfrmMain.tvControlsMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if Button=mbRight then begin
+    if assigned(tvControls.Selected) and assigned(tvControls.Selected.Parent) then begin
+      if tvControls.Selected.Parent.Text = 'Buses' then begin
+        pmBusOptions.PopUp;
+      end;
+      if tvControls.Selected.Parent.Text = 'Controls' then begin
+        pmControlOptions.PopUp;
+      end;
+    end;
+  end;
 end;
 
 procedure TfrmMain.MQTTClientPublish(Sender: TObject; topic, payload: ansistring
@@ -399,11 +520,11 @@ begin
               log('got configuration: ' +payload);
               try
                 roundJSONParser := TJSONParser.Create(payload);
-                roundConfigJSON := TJSONObject(roundJSONPaser.Parse);
-                initiateRount(roundConfigJSON);
+                roundConfigJSON := TJSONObject(roundJSONParser.Parse);
+                initiateRound(roundConfigJSON);
               finally
                 roundConfigJSON.Free;
-                roundJSONPaser.Free;
+                roundJSONParser.Free;
               end;
             end else
             begin
@@ -449,12 +570,12 @@ begin
   if MQTTClient.isConnected then begin
     statusBar.SimpleText:='Connected';
     gbComServer.Enabled:=true;
+    MQTTClient.PingReq;
   end else
   begin
     statusBar.SimpleText:='Disconnected';
     gbComServer.Enabled:=false;
   end;
-  MQTTClient.PingReq;
 end;
 
 procedure TfrmMain.loadControlData();
@@ -484,7 +605,14 @@ begin
     if hardwareType = 'potentiometer' then myspacehackControls[i] := TSpacehackGameControlPotentiometer.create;
     if hardwareType = 'illuminatedbutton' then myspacehackControls[i] := TSpacehackGameControlIlluminatedButton.create;
     if hardwareType = 'keypad' then myspacehackControls[i] := TSpacehackGameControlKeypad.create;
-    //myspacehackControls[i] := TSpacehackControl.create;
+    if not assigned(myspacehackControls[i]) then begin
+      myspacehackControls[i] := TSpacehackGameControl.Create;
+    end;
+
+    if myspacehackControls[i] is TSpacehackGameControl then begin
+      TSpacehackGameControl(myspacehackControls[i]).changeTopic:='clients/'+myIP+'/' + inttostr(i)+'/valuechanged';
+    end;
+
     myspacehackControls[i].hardware:=hardwareType;
 
     //get the JSON for the display object
