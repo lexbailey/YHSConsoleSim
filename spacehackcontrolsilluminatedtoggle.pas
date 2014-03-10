@@ -19,6 +19,7 @@ type
     procedure updateUI override;
     procedure handleOnClick(Sender: TObject);
     procedure handleOffClick(Sender: TObject);
+    function controlTypeValid(value: string): boolean override;
   end;
 
 implementation
@@ -66,11 +67,13 @@ end;
 procedure TSpacehackGameControlIlluminatedToggle.handleOnClick(Sender: TObject);
 begin;
   lightIsOn:=true;
+  MQTTClient.Publish(changeTopic, '1');
 end;
 
 procedure TSpacehackGameControlIlluminatedToggle.handleOffClick(Sender: TObject);
 begin;
   lightIsOn:=false;
+  MQTTClient.Publish(changeTopic, '0');
 end;
 
 procedure TSpacehackGameControlIlluminatedToggle.updateUI;
@@ -92,6 +95,11 @@ begin
     end;
     left := round((panelWidth/2) - (width/2));
   end;
+end;
+
+function TSpacehackGameControlIlluminatedToggle.controlTypeValid(value: string): boolean;
+begin
+  result := (value = 'toggle');
 end;
 
 end.

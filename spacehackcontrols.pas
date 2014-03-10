@@ -42,9 +42,12 @@ type
   end;
 
   TSpacehackGameControl = class(TSpacehackControl)
-    controlType: string;
+    fcontrolType: string;
     changeTopic : string;
     procedure updateUI override;
+    procedure setControlType(value: string) virtual;
+    function controlTypeValid(value: string): boolean virtual;
+    property controlType: string read fcontrolType write setControlType;
   end;
 
 var
@@ -84,5 +87,20 @@ begin
     aLabel.Caption:='';
 end;
 
+function TSpacehackGameControl.controlTypeValid(value: string):boolean;
+begin
+  result := true;
+end;
+
+procedure TSpacehackGameControl.setControlType(value: string);
+begin
+  if (controlTypeValid(value)) then begin
+    fcontrolType:=value;
+  end else
+  begin
+    raise Exception.Create('Invalid control type selected for control "' + name + '".');
+  end;
+end;
+//ygs=ycf+ypi
 end.
 

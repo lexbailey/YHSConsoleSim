@@ -15,6 +15,7 @@ type
     Button1, Button2, Button3, Button4: TButton;
     procedure initUI(thisPanel:TPanel) override;
     procedure handleButtonClick(sender: TObject);
+    function controlTypeValid(value: string):boolean override;
   end;
 
 implementation
@@ -42,6 +43,11 @@ end;
 procedure TSpacehackGameControlFourButtons.handleButtonClick(sender: TObject);
 begin;
   //TODO handle four buttons
+end;
+
+function TSpacehackGameControlFourButtons .controlTypeValid(value: string): boolean;
+begin
+  result := (value = 'verbs') or (value = 'colour');
 end;
 
 end.

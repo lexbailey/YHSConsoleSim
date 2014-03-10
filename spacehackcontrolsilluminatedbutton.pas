@@ -22,6 +22,7 @@ type
    procedure handleButtonDown(Sender: TObject; Button: TMouseButton;
                          Shift: TShiftState; X, Y: Integer);
    procedure updateUI override;
+   function  controlTypeValid(value: string): boolean override;
  end;
 
 implementation
@@ -101,6 +102,11 @@ begin
     end;
     left := round((panelWidth/2) - (width/2));
   end;
+end;
+
+function TSpacehackGameControlIlluminatedButton.controlTypeValid(value: string): boolean;
+begin
+  result := (value = 'toggle') or (value = 'button');
 end;
 
 end.

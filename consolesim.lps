@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="30">
+    <Units Count="31">
       <Unit0>
         <Filename Value="consolesim.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -23,8 +23,8 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="774"/>
-        <CursorPos X="22" Y="794"/>
+        <TopLine Value="166"/>
+        <CursorPos X="29" Y="175"/>
         <UsageCount Value="441"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -33,10 +33,10 @@
         <Filename Value="spacehackcontrols.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrols"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="21"/>
-        <CursorPos X="3" Y="44"/>
+        <TopLine Value="47"/>
+        <CursorPos X="14" Y="104"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -44,21 +44,19 @@
         <Filename Value="spacehackcontrolsinstructiondisplay.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrolsinstructiondisplay"/>
-        <EditorIndex Value="12"/>
         <WindowIndex Value="0"/>
         <TopLine Value="11"/>
         <CursorPos X="25" Y="24"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="spacehackcontrolsilluminatedtoggle.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrolsilluminatedtoggle"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="52"/>
-        <CursorPos X="13" Y="78"/>
+        <TopLine Value="79"/>
+        <CursorPos X="61" Y="100"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit4>
@@ -66,21 +64,19 @@
         <Filename Value="spacehackcontrolskeypad.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrolskeypad"/>
-        <EditorIndex Value="10"/>
         <WindowIndex Value="0"/>
         <TopLine Value="12"/>
         <CursorPos X="91" Y="12"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="spacehackcontrolsfourbuttons.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrolsfourbuttons"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="69" Y="13"/>
+        <TopLine Value="27"/>
+        <CursorPos X="60" Y="48"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit6>
@@ -88,12 +84,10 @@
         <Filename Value="spacehackcontrolspotentiometer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrolspotentiometer"/>
-        <EditorIndex Value="8"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="7"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="spacehackcontrolscombosevensegcolourrotary.pas"/>
@@ -101,7 +95,7 @@
         <UnitName Value="spacehackcontrolscombosevensegcolourrotary"/>
         <EditorIndex Value="7"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="32"/>
+        <TopLine Value="1"/>
         <CursorPos X="22" Y="32"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -110,10 +104,10 @@
         <Filename Value="spacehackcontrolsilluminatedbutton.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrolsilluminatedbutton"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="60"/>
-        <CursorPos X="37" Y="64"/>
+        <TopLine Value="87"/>
+        <CursorPos X="53" Y="109"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit9>
@@ -126,7 +120,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="31"/>
         <CursorPos X="6" Y="49"/>
-        <UsageCount Value="185"/>
+        <UsageCount Value="190"/>
       </Unit10>
       <Unit11>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
@@ -243,147 +237,178 @@
       </Unit25>
       <Unit26>
         <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/objpas/classes/classesh.inc"/>
-        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1592"/>
         <CursorPos X="76" Y="1617"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="14"/>
       </Unit26>
       <Unit27>
         <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/control.inc"/>
-        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="3233"/>
         <CursorPos X="34" Y="3247"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="13"/>
       </Unit27>
       <Unit28>
         <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
         <UnitName Value="MQTTComponent"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="27" Y="6"/>
-        <UsageCount Value="11"/>
+        <TopLine Value="318"/>
+        <CursorPos X="22" Y="334"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit28>
       <Unit29>
         <Filename Value="/usr/share/fpcsrc/2.6.2/packages/fcl-json/src/jsonparser.pp"/>
         <UnitName Value="jsonparser"/>
-        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="123"/>
         <CursorPos X="11" Y="129"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit29>
+      <Unit30>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponentReadThread.pas"/>
+        <UnitName Value="MQTTComponentReadThread"/>
+        <EditorIndex Value="4"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="172"/>
+        <CursorPos X="72" Y="184"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit30>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
-    <JumpHistory Count="25" HistoryIndex="24">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="154" Column="6" TopLine="126"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="752" Column="19" TopLine="679"/>
       </Position1>
       <Position2>
-        <Filename Value="spacehackcontrolsilluminatedbutton.pas"/>
-        <Caret Line="64" Column="37" TopLine="1"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="175" Column="62" TopLine="162"/>
       </Position2>
       <Position3>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="598" Column="128" TopLine="587"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="280" Column="32" TopLine="275"/>
       </Position3>
       <Position4>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="613" Column="102" TopLine="590"/>
+        <Caret Line="326" Column="1" TopLine="313"/>
       </Position4>
       <Position5>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="523" Column="1" TopLine="501"/>
+        <Caret Line="170" Column="1" TopLine="157"/>
       </Position5>
       <Position6>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="416" Column="101" TopLine="405"/>
+        <Caret Line="172" Column="1" TopLine="157"/>
       </Position6>
       <Position7>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="414" Column="5" TopLine="401"/>
+        <Caret Line="173" Column="1" TopLine="157"/>
       </Position7>
       <Position8>
-        <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/control.inc"/>
-        <Caret Line="3246" Column="1" TopLine="3238"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="175" Column="1" TopLine="157"/>
       </Position8>
       <Position9>
-        <Filename Value="spacehackcontrolsinstructiondisplay.pas"/>
-        <Caret Line="48" Column="31" TopLine="26"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="176" Column="1" TopLine="157"/>
       </Position9>
       <Position10>
-        <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/control.inc"/>
-        <Caret Line="4745" Column="6" TopLine="4734"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="178" Column="1" TopLine="157"/>
       </Position10>
       <Position11>
         <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
-        <Caret Line="6" Column="27" TopLine="1"/>
+        <Caret Line="274" Column="1" TopLine="260"/>
       </Position11>
       <Position12>
-        <Filename Value="spacehackcontrolsinstructiondisplay.pas"/>
-        <Caret Line="56" Column="26" TopLine="34"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="275" Column="1" TopLine="260"/>
       </Position12>
       <Position13>
-        <Filename Value="spacehackcontrolsinstructiondisplay.pas"/>
-        <Caret Line="24" Column="25" TopLine="11"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="276" Column="1" TopLine="260"/>
       </Position13>
       <Position14>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="527" Column="69" TopLine="506"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="277" Column="1" TopLine="260"/>
       </Position14>
       <Position15>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="526" Column="1" TopLine="506"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="279" Column="1" TopLine="260"/>
       </Position15>
       <Position16>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="527" Column="1" TopLine="506"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="280" Column="34" TopLine="260"/>
       </Position16>
       <Position17>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="528" Column="27" TopLine="507"/>
+        <Caret Line="326" Column="1" TopLine="313"/>
       </Position17>
       <Position18>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="446" Column="1" TopLine="432"/>
+        <Caret Line="170" Column="1" TopLine="158"/>
       </Position18>
       <Position19>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="447" Column="54" TopLine="445"/>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="292" Column="40" TopLine="282"/>
       </Position19>
       <Position20>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="530" Column="35" TopLine="508"/>
+        <Caret Line="326" Column="1" TopLine="314"/>
       </Position20>
       <Position21>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="246" Column="74" TopLine="244"/>
+        <Caret Line="173" Column="5" TopLine="158"/>
       </Position21>
       <Position22>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="118" Column="33" TopLine="103"/>
+        <Caret Line="147" Column="18" TopLine="604"/>
       </Position22>
       <Position23>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="330" Column="3" TopLine="327"/>
+        <Caret Line="90" Column="15" TopLine="79"/>
       </Position23>
       <Position24>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="795" Column="22" TopLine="775"/>
+        <Caret Line="324" Column="11" TopLine="317"/>
       </Position24>
       <Position25>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="794" Column="22" TopLine="774"/>
+        <Caret Line="79" Column="15" TopLine="68"/>
       </Position25>
+      <Position26>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="302" Column="6" TopLine="161"/>
+      </Position26>
+      <Position27>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="161" Column="22" TopLine="151"/>
+      </Position27>
+      <Position28>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="329" Column="22" TopLine="324"/>
+      </Position28>
+      <Position29>
+        <Filename Value="/usr/share/lazarus/1.0.14/components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
+        <Caret Line="543" Column="38" TopLine="529"/>
+      </Position29>
+      <Position30>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="329" Column="28" TopLine="287"/>
+      </Position30>
     </JumpHistory>
   </ProjectSession>
+  <Debugging>
+    <Watches Count="1">
+      <Item1>
+        <Expression Value="count"/>
+      </Item1>
+    </Watches>
+  </Debugging>
 </CONFIG>

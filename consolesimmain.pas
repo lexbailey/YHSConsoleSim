@@ -76,7 +76,6 @@ type
     tvControls: TTreeView;
     procedure btnAutoSubscribeClick(Sender: TObject);
     procedure btnClearSubsClick(Sender: TObject);
-    procedure btnCreateControlsClick(Sender: TObject);
     procedure btnDisconnectClick(Sender: TObject);
     procedure btnPinShowClick(Sender: TObject);
     procedure btnPublishClick(Sender: TObject);
@@ -84,8 +83,6 @@ type
     procedure btnReloadClick(Sender: TObject);
     procedure cbUIUpdateChange(Sender: TObject);
     procedure fneLoadConfigAcceptFileName(Sender: TObject; var Value: String);
-    procedure fneLoadConfigChange(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure gbStdSubClick(Sender: TObject);
@@ -95,13 +92,10 @@ type
     procedure miControlPinsClick(Sender: TObject);
     procedure miShowPinsClick(Sender: TObject);
     procedure MQTTClientConnAck(Sender: TObject; ReturnCode: integer);
-    procedure MQTTClientPingResp(Sender: TObject);
     procedure MQTTClientPublish(Sender: TObject; topic, payload: ansistring);
     procedure MQTTClientSubAck(Sender: TObject; MessageID: integer;
       GrantedQoS: integer);
-    procedure pnlLoadConfigClick(Sender: TObject);
     procedure pnlLoadConfigResize(Sender: TObject);
-    procedure sbDrawingAreaPaint(Sender: TObject);
     procedure tmrStatTimer(Sender: TObject);
     procedure loadControlData;
     procedure controlDataToTree;
@@ -112,7 +106,6 @@ type
     procedure tmrUIUpdateTimer(Sender: TObject);
     procedure handleControlUpdate(controlID: integer; topic, payload: string);
     procedure initiateRound(roundConfig: TJSONObject);
-    procedure tvControlsClick(Sender: TObject);
     procedure tvControlsMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure InitialiseControls;
@@ -179,15 +172,7 @@ begin
   gbComServer.Enabled:=false;
   log('Disconnecting...');
   //if we are connected...
-  if MQTTClient.isConnected then begin
-    log('Graceful disconnect...');
-    //try to disconnect nicely
-    if not MQTTClient.Disconnect then begin
-      log('Forecful disconnect...');
-      //if that fails then just abandon ship
-      MQTTClient.ForceDisconnect;
-    end;
-  end;
+  MQTTClient.FullDisconnect;
 end;
 
 procedure TfrmMain.btnPinShowClick(Sender: TObject);
@@ -332,11 +317,8 @@ procedure TfrmMain.btnConnectClick(Sender: TObject);
 begin
   log('Starting connection...');
   //if connected, disconnect
-  if MQTTClient.isConnected then begin
-    if not MQTTClient.Disconnect then begin
-      MQTTClient.ForceDisconnect;
-    end;
-  end;
+
+  btnDisconnectClick(sender);
   log('Host: ' + eServer.Text);
   log('Port: ' + trim(ePort.Text));
   log('CID: ' + MQTTClient.ClientID);
